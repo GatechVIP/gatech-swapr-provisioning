@@ -30,6 +30,8 @@
 
 - service: name=postgresql enabled=yes state=started
 
+# note that the below tasks use port 5433 which is what we run the Postgres daemon on 
+
 - name: create swapr postgres user
   postgresql_user: >
     user={{ postgres_username }}
@@ -45,6 +47,7 @@
     login_password={{ postgres_user_password }}
     name={{ postgres_db_name }}
     owner={{ postgres_username }}
+    port=5433
     encoding='UTF-8'
     lc_collate=en_US.UTF-8
     lc_ctype=en_US.UTF-8

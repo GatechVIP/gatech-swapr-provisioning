@@ -5,7 +5,7 @@
   git: >
     repo={{ git_repo }}
     dest={{ webapp_path }}
-    update=no
+    update=yes
     accept_hostkey=yes
     version={{ git_repo_version }}
   become: True
@@ -15,7 +15,7 @@
   git: >
     repo={{ frontend_git_repo }}
     dest={{ frontend_path }}
-    update=no
+    update=yes
     accept_hostkey=yes
     version={{ git_repo_version }}
   become: True
@@ -34,15 +34,17 @@
   when: adjust_git_credentials is defined and adjust_git_credentials
 
 - name: build frontend environment (install npm dependencies)
+  become: yes
+  become_user: "{{ unprivved_app_user }}"
   npm: >
     path={{ frontend_path }}
 
-- name: build frontend environment (install bower)
+- name: install frontend deps (bower)
   npm: >
     name=bower
     global=yes
 
-- name: build frontend environment (install express)
+- name: install frontend deps (express)
   npm: >
     name=express
     global=yes
@@ -54,11 +56,13 @@
   args:
     chdir: "{{ frontend_path }}"
 
-- name: build frontend environment (install grunt-cli)
+- name: install frontend deps (grunt-cli)
   npm: >
     name=grunt-cli
     global=yes
 
 - name: build backend environement (install npm dependencies)
+  become: yes
+  become_user: "{{ unprivved_app_user }}"
   npm: >
     path={{ webapp_path }}
