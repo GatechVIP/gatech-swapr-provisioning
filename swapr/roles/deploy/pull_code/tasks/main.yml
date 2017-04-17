@@ -1,0 +1,18 @@
+---
+# file: roles/deploy/pull_code/tasks/main.yml
+
+- name: get current branch name
+  command: git rev-parse --abbrev-ref HEAD chdir="{{ webapp_path }}"
+  register: current_branch
+  changed_when: False
+
+- name: pulling updates from git
+  git: >
+    repo={{ git_repo }}
+    dest={{ webapp_path }}
+    update=yes
+    version={{ current_branch.stdout }}
+    accept_hostkey=yes
+  become: True
+  become_user: "{{ unprivved_app_user }}"
+  register: git_output

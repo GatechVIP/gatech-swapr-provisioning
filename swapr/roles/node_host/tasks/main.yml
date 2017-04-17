@@ -1,0 +1,11 @@
+---
+# file: roles/node_host/tasks/main.yml
+
+- include: install_deps.yml
+
+- include: setup_user.yml
+- include: setup_nodejs.yml
+- include: setup_env.yml
+
+- include: setup_pgbouncer.yml
+  when: run_pgbouncer

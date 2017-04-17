@@ -1,0 +1,26 @@
+---
+# file: roles/node_host/tasks/setup_pgbouncer.yml
+
+- name: install pgbouncer
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - pgbouncer
+
+- copy: >
+    src=etc/default/pgbouncer
+    dest=/etc/default/pgbouncer
+    owner=root group=root mode=0644
+
+- file: >
+    path=/var/log/postgresql/pgbouncer.log
+    state=touch
+    owner=postgres group=postgres mode=0644
+
+- name: copy pgbouncer.ini into place
+  template: >
+    src=etc/pgbouncer/pgbouncer.ini
+    dest=/etc/pgbouncer/pgbouncer.ini
+    owner=postgres group=postgres mode=0640
+  notify: restart pgbouncer
+
+- service: name=pgbouncer state=started

@@ -1,0 +1,6 @@
+---
+# file: roles/node_host/handlers/main.yml
+
+- name: restart gunicorn
+  supervisorctl: name=gunicorn state=restarted
+#supervisorctl pid appname | xargs kill -s HUP

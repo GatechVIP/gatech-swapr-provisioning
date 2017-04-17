@@ -1,0 +1,17 @@
+---
+# file: group_vars/developer
+
+ansible_ssh_user: vagrant
+
+postgres_db_name: swapr_dev
+
+swapfile_block_size: 1G
+swapfile_block_count: 3
+
+# This needs to be manually done by the user. Maybe prompt in the future?
+adjust_git_credentials: no
+
+run_dist_upgrade: yes
+
+is_production_env: no
+is_dev_env: yes

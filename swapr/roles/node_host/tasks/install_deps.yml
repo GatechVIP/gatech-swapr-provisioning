@@ -1,0 +1,27 @@
+---
+# file: roles/node_host/tasks/install_deps.yml
+
+- name: add official postgres GPG keys
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+- name: add official postgres Debian repository
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
+
+- name: install dependencies via apt
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - build-essential
+    - libfreetype6
+    - libfreetype6-dev
+    - git
+    - libpq-dev
+    - postgresql-client-9.3
+    - ttf-dejavu-core
+    - zlib1g
+    - zlib1g-dev
+    - libjpeg-dev
+    - liblcms2-dev
+    - libwebp-dev
+    - libtiff-dev
+    - ruby
+    - ruby-sass
+

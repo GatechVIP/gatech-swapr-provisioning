@@ -1,0 +1,47 @@
+---
+# file: roles/bootstrap/ubuntu/tasks/main.yml
+
+- include: locale_and_tz.yml
+
+- name: update apt cache
+  apt: update_cache=yes
+
+- name: run dist-upgrade
+  apt: upgrade=dist
+  when: run_dist_upgrade
+
+- name: copy rc.local into place
+  template: >
+    src=etc/rc.local
+    dest=/etc/rc.local
+    owner=root group=root mode=0755
+  notify: restart rc.local
+  when: has_swapfile is defined and has_swapfile
+
+- meta: flush_handlers
+
+- sysctl: >
+    name=vm.swappiness
+    value={{ sysctl_vm_swappiness }}
+    state=present
+
+- name: install common packages
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - ntp
+    - sysstat
+    - htop
+    - iotop
+    - traceroute
+    - vim
+    - screen
+    - telnet
+    - python-psycopg2
+
+- name: copy over vimrc
+  copy: >
+    src=etc/vim/vimrc.local
+    dest=/etc/vim/vimrc.local
+    owner=root group=root mode=0644
+
+- include: enable_unattended_upgrades.yml

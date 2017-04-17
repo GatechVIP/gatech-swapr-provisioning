@@ -1,0 +1,53 @@
+---
+# file: roles/postgres/tasks/main.yml
+
+- name: add official postgres GPG keys
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+- name: add official postgres Debian repository
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
+
+- name: install postgres
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - postgresql-9.3
+    - postgresql-contrib-9.3
+
+- name: copy pg_hba.conf into place
+  template: >
+    src=etc/postgresql/9.3/main/pg_hba.conf
+    dest=/etc/postgresql/9.3/main/
+    owner=postgres group=postgres mode=0600
+  notify: restart postgresql
+
+- name: copy postgresql.conf into place
+  template: >
+    src=etc/postgresql/9.3/main/postgresql.conf
+    dest=/etc/postgresql/9.3/main/
+    owner=postgres group=postgres mode=0600
+  notify: restart postgresql
+
+- meta: flush_handlers
+
+- service: name=postgresql enabled=yes state=started
+
+- name: create swapr postgres user
+  postgresql_user: >
+    user={{ postgres_username }}
+    password={{ postgres_user_password }}
+    role_attr_flags=LOGIN,CREATEDB,SUPERUSER
+    port=5433
+  become: True
+  become_user: postgres
+
+- name: create swapr_dev DB
+  postgresql_db: >
+    login_user={{ postgres_username }}
+    login_password={{ postgres_user_password }}
+    name={{ postgres_db_name }}
+    owner={{ postgres_username }}
+    encoding='UTF-8'
+    lc_collate=en_US.UTF-8
+    lc_ctype=en_US.UTF-8
+  become: True
+  become_user: postgres
+

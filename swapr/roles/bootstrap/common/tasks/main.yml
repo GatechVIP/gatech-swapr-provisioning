@@ -1,0 +1,12 @@
+---
+# file: roles/bootstrap/common/tasks/main.yml
+
+- name: tweak sudoers file to allow passwordless sudo for sudo group (sudo group)
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL:ALL) NOPASSWD: ALL'"
+
+# SSH keys are added/removed via bootstrap/common/vars/main.yml
+- name: set up authorized_keys for the deploy user
+  authorized_key: >
+    user="{{ ansible_ssh_user }}"
+    key="{{ lookup('file','public_keys/'+item) }}"
+  with_items: admin_public_key_filenames

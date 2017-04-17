@@ -1,0 +1,5 @@
+---
+# file: roles/dev_workstation/post_node_host/tasks/main.yml
+
+- include: copy_ssh_keys.yml
+- include: setup_samba.yml

@@ -1,0 +1,6 @@
+# file: bootstrap/common/vars/main.yml
+
+# This determines which SSH keys in bootstrap/common/files/public_keys get added.
+# These are filenames.
+admin_public_key_filenames:
+  - brad

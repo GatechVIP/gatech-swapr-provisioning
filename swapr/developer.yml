@@ -1,0 +1,13 @@
+---
+# file: developer.yml
+
+- hosts: developer
+  become: True
+  handlers:
+    - include: handlers/main.yml
+  roles:
+    - bootstrap/common
+    - bootstrap/ubuntu
+    - postgres
+    - node_host
+    - dev_workstation/post_node_host

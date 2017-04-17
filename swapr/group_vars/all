@@ -1,0 +1,44 @@
+---
+# file: group_vars/all
+
+ansible_ssh_user: ansible
+
+# Override these in your inventory lists on developer workstations.
+# When True, we're not playing around.
+is_production_env: yes
+is_dev_env: no
+
+unprivved_app_user: swapr
+unprivved_app_user_home_path: /home/{{ unprivved_app_user }}
+webapp_path: "{{ unprivved_app_user_home_path }}/server"
+webapp_log_path: "{{ webapp_path }}/logs"
+webapp_pid_path: "{{ webapp_path }}"
+frontend_path: "{{ unprivved_app_user_home_path }}/client"
+
+nodejs_version: "6.x"
+nodejs_install_npm_user: "{{ unprivved_app_user }}"
+nodejs_npm_global_packages:
+    - name: pm2
+
+git_repo: ssh://git@github.com/GatechVIP/gatech-swapr-server-node.git
+git_repo_version: master
+
+frontend_git_repo: ssh://git@github.com/GatechVIP/gatech-swapr-client.git
+frontend_git_repo_version: master
+
+postgres_host: 127.0.0.1
+postgres_port: 5432
+postgres_username: swapr
+postgres_user_password: change_me_and_reprovision_everyone_later
+postgres_db_name: swapr_prod
+
+adjust_git_credentials: yes
+git_user_email: "deploy@swapr.vip.gatech.edu"
+git_user_name: "SWAPR"
+
+# Override this as need be.
+has_swapfile: yes
+swapfile_block_size: 1G
+swapfile_block_count: 6
+
+sysctl_vm_swappiness: 10
