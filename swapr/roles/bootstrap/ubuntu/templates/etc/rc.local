@@ -1,8 +1,0 @@
-#!/bin/bash
-
-dd if=/dev/zero of=/mnt/swapfile.sys bs={{ swapfile_block_size }} count={{ swapfile_block_count}}
-chmod 600 /mnt/swapfile.sys
-mkswap /mnt/swapfile.sys
-swapon /mnt/swapfile.sys
-
-exit 0

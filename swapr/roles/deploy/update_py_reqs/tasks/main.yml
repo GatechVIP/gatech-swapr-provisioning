@@ -1,9 +1,0 @@
----
-# file: roles/deploy/update_py_reqs/tasks/main.yml
-
-- name: make sure virtualenv has up to date requirements via pip
-  pip: >
-    requirements={{ webapp_path }}/requirements.txt
-    virtualenv={{ virtualenv_path }}
-  become: True
-  become_user: "{{ unprivved_app_user }}"

@@ -1,2 +1,0 @@
-[production]
-swapr.vip.gatech.edu	ansible_ssh_user=ansible

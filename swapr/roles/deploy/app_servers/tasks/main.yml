@@ -1,5 +1,0 @@
----
-# file: roles/deploy/app_servers/tasks/main.yml
-
-- supervisorctl: name=gunicorn state=restarted
-  when: run_gunicorn is defined and run_gunicorn

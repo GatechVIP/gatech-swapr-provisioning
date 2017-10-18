@@ -1,4 +1,0 @@
----
-# file: roles/deploy/pull_code/defaults/main.yml
-
-announce_git_hashes: no

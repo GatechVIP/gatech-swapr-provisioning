@@ -1,2 +1,0 @@
-ansible
-python-keyczar==0.71c

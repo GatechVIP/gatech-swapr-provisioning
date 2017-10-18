@@ -1,4 +1,0 @@
----
-# file: roles/bootstrap/ubuntu/defaults/main.yml
-
-run_dist_upgrade: no
