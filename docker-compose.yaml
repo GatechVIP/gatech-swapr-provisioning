@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+  db:
+    image: postgres:9.6
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - db
+    environment:
+      POSTGRES_USER: swapr
+      POSTGRES_PASSWORD: changeme_devpasswd
+      POSTGRES_DB: swapr
+
+  backend:
+    build: ./gatech-swapr-server-node
+    user: "node"
+    volumes:
+      - ./gatech-swapr-server-node:/data/app
+      - ./config/backend-config.json:/data/app/config/config.json
+      - /data/node_modules
+    working_dir: /data/app
+    environment:
+      PORT: 8001
+      DATABASE_URL: "postgresql://swapr:changeme_devpasswd@db/swapr"
+    networks:
+      - backend
+      - db
+  www:
+    image: nginx:latest
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/conf.d/vhost.conf:ro
+      - ./gatech-swapr-client/dist:/usr/share/nginx/html:ro
+
+networks:
+  backend:
+  db:
+
+volumes:
+  db-data:
