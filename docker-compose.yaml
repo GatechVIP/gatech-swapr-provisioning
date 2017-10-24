@@ -35,6 +35,8 @@ services:
     volumes:
       - ./config/nginx.conf:/etc/nginx/conf.d/vhost.conf:ro
       - ./gatech-swapr-client/dist:/usr/share/nginx/html:ro
+    links:
+      - backend
 
 networks:
   backend:
