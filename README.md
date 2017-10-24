@@ -8,11 +8,11 @@ To provision a local copy of the SWAPR development environment, first ensure tha
 Next, run the following commands to clone the repository and build the environment.
 
 ```bash
-git clone git@github.com:GatechVIP/gatech-swapr-provisioning.git
-git submodule init
-git submodule update
+git clone --recursive git@github.com:GatechVIP/gatech-swapr-provisioning.git
 docker-compose up --build
 ```
+
+In addition, when updating submodules (client and server), run `git submodule update --remote`.
 
 Then, on your host machine, port 8080 should point to the nginx service which should be serving the most recent build (in the `dist` directory) of the client code.
 
