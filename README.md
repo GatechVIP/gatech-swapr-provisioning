@@ -28,6 +28,7 @@ Here are a list of tasks that still need to be accomplished for this Docker envi
     - Use Docker secrets to pull out passwords
     - Make sure that that `config.json` located in `config/backend-config.json` is correct and can be used for all build configurations
     - Add appropriate environmental variables based on build configurations
+    - Set secret key in backend config.json
 - Production
     - Create `production.yml` for production settings
         - Make sure to use client `dist`
