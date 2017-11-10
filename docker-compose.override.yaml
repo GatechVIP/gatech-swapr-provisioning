@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  db:
+    environment:
+      POSTGRES_USER: swapr
+      POSTGRES_PASSWORD: changeme_devpasswd
+      POSTGRES_DB: swapr_dev
+
+  backend:
+    environment:
+      PORT: 8001
+      NODE_ENV: development
+      DB_USERNAME: swapr
+      DB_PASSWORD: changeme_devpasswd
+      DB_NAME: swapr_dev
+
+  www:
+    ports:
+      - 8080:8080
