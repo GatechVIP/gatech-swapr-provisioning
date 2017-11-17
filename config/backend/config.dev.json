@@ -1,0 +1,9 @@
+{
+    "express": {
+        "sessionKey": "swapr_dev_insecure"
+    },
+    "cas": {
+        "ssoBaseURL": "https://login.gatech.edu/cas",
+        "serverBaseURL": "https://swapr-dev.vip.gatech.edu:8443"
+    }
+}

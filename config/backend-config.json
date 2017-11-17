@@ -1,9 +1,0 @@
-{
-    "express": {
-        "sessionKey": "swapr"
-    },
-    "cas": {
-        "ssoBaseURL": "https://login.gatech.edu/cas",
-        "serverBaseURL": "https://swapr.vip.gatech.edu"
-    }
-}

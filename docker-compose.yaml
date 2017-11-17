@@ -12,7 +12,7 @@ services:
     user: "node"
     volumes:
       - ./gatech-swapr-server-node:/data/app
-      - ./config/backend-config.json:/data/app/config/config.json:ro
+      - ./config/backend/config.json:/data/app/config/config.json:ro
       - /data/node_modules
     working_dir: /data/app
     depends_on:
@@ -28,8 +28,8 @@ services:
     networks:
       - backend
     volumes:
-      - ./config/nginx.conf:/etc/nginx/conf.d/vhost.conf:ro
-      - ./config/ssl:/etc/nginx/ssl:ro
+      - ./config/www/nginx.conf:/etc/nginx/conf.d/vhost.conf:ro
+      - ./config/www/ssl:/etc/nginx/ssl:ro
       - ./gatech-swapr-client/dist:/usr/share/nginx/html:ro
     links:
       - backend
