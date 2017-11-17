@@ -20,7 +20,7 @@ See Rackspace's article on how to [modify your hosts file]. Add the following en
 
 You should now be able to run `ping swapr-dev.vip.gatech.edu` to see it resolving to `127.0.0.1`.
 
-You'll then need to download the self-signed development SSL certificate to add it to your operating system's trust store: [Download certificate]
+You'll then need to download the self-signed development SSL certificate to add it to your operating system's trust store: [Download certificate] \(right click and save as\)
 
 Then, to add it to your operating system's trust store so you don't get SSL warnings in your browser. If you're unfamiliar with the process, follow the guide below for your operating system. Only the macOS guide has been tested, so create an issue in the provisioning repository if that's the case.
 
@@ -30,7 +30,7 @@ Then, to add it to your operating system's trust store so you don't get SSL warn
 
 
 [Modify your hosts file]: <https://support.rackspace.com/how-to/modify-your-hosts-file/>
-[Download certificate]: <>
+[Download certificate]: <https://raw.githubusercontent.com/GatechVIP/gatech-swapr-provisioning/master/config/ssl/ssl.dev.cert>
 [Windows]: <https://community.spiceworks.com/how_to/1839-installing-self-signed-ca-certificate-in-windows>
 [macOS]: <https://tosbourn.com/getting-os-x-to-trust-self-signed-ssl-certificates/>
 
