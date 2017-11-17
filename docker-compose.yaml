@@ -12,7 +12,6 @@ services:
     user: "node"
     volumes:
       - ./gatech-swapr-server-node:/data/app
-      - ./config/backend/config.json:/data/app/config/config.json:ro
       - /data/node_modules
     working_dir: /data/app
     depends_on:
