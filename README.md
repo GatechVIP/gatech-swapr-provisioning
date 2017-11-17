@@ -70,11 +70,11 @@ just make sure to run `git submodule update` in the provisioning repo.
 
 [Docker]: <https://store.docker.com/search?type=edition&offering=community>
 
-## Provisioning
-
-To run your SWAPR instance with docker, run `docker-compose up --build` to start all three services (db, backend, www) in the same console. The services will stay alive until one encounters a fatal error, or a `Ctrl-C` is issued in the terminal.
+## Interacting with containers
 
 If you need to run commands on the backend container, you can run `docker-compose exec backend bash` in a separate terminal to start a shell. This is useful for running `sequelize` commands for database migrations.
+
+Alternatively, instead of starting a shell, you can run one-off commands in the already-running container. For example, to migrate the database to the latest state, run `docker-compose exec backend sequelize db:migrate` from your host machine.
 
 ## Next steps
 Here are a list of tasks that still need to be accomplished for this Docker environment.
