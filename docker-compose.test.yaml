@@ -1,0 +1,40 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:9.6
+    networks:
+      - db
+    environment:
+      POSTGRES_USER: swapr
+      POSTGRES_PASSWORD: changeme_devpasswd
+      POSTGRES_DB: swapr_test
+
+  test:
+    build:
+      context: ./gatech-swapr-server-node
+      dockerfile: Dockerfile.test
+    user: "node"
+    volumes:
+      - ./gatech-swapr-server-node:/data/app
+      - /data/node_modules
+    working_dir: /data/app
+    depends_on:
+      - db
+    networks:
+      - backend
+      - db
+    environment:
+      PORT: 8001
+      NODE_ENV: development
+      DB_USERNAME: swapr
+      DB_PASSWORD: changeme_devpasswd
+      DB_NAME: swapr_test
+    volumes:
+      - ./config/backend/config.dev.json:/data/app/config/config.json:ro
+
+networks:
+  backend:
+  db:
+
+volumes:
+  db-data:
