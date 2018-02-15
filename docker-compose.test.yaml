@@ -14,9 +14,9 @@ services:
       context: ./gatech-swapr-server-node
       dockerfile: Dockerfile.test
     user: "node"
+    tty: true
     volumes:
       - ./gatech-swapr-server-node:/data/app
-      - /data/node_modules
     working_dir: /data/app
     depends_on:
       - db

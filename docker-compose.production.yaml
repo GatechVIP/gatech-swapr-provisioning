@@ -1,0 +1,50 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:9.6
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - db
+
+  backend:
+    image: gatechswapr/backend:latest
+    user: "node"
+    configs:
+      - source: backend_config
+        target: /data/app/config/config.json
+    volumes:
+      - /data/node_modules
+    working_dir: /data/app
+    depends_on:
+      - db
+    networks:
+      - backend
+      - db
+  www:
+    image: nginx:latest
+    depends_on:
+      - backend
+    networks:
+      - backend
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/conf.d/vhost.conf
+    volumes:
+      - ./config/www/ssl:/etc/nginx/ssl:ro
+      - ./gatech-swapr-client/dist:/usr/share/nginx/html:ro
+    links:
+      - backend
+
+networks:
+  backend:
+  db:
+
+volumes:
+  db-data:
+
+configs:
+  nginx_config:
+    file: ./config/www/nginx.conf
+  backend_config:
+    file: ./config/backend/config.prod.json

@@ -13,29 +13,49 @@ services:
     volumes:
       - ./gatech-swapr-server-node:/data/app
       - /data/node_modules
+      - ~/.swapr-yarn-cache:/yarn_cache
     working_dir: /data/app
     depends_on:
       - db
     networks:
       - backend
       - db
+    environment:
+      YARN_CACHE_FOLDER: /yarn_cache
+
+  client-watch:
+    build: ./gatech-swapr-client
+    user: "node"
+    volumes:
+      - ./gatech-swapr-client:/data/src
+      - /data/node_modules
+      - ~/.swapr-yarn-cache:/yarn_cache
+    working_dir: /data/src
+    networks:
+      - client-watch
+    environment:
+      YARN_CACHE_FOLDER: /yarn_cache
 
   www:
     image: nginx:latest
     depends_on:
       - backend
+      - client-watch
     networks:
       - backend
+      - client-watch
     volumes:
-      - ./config/www/nginx.conf:/etc/nginx/conf.d/vhost.conf:ro
+      - ./config/www/nginx.dev.conf:/etc/nginx/conf.d/vhost.conf:ro
       - ./config/www/ssl:/etc/nginx/ssl:ro
-      - ./gatech-swapr-client/dist:/usr/share/nginx/html:ro
+      - ./gatech-swapr-client/dist:/client_dist:ro
     links:
       - backend
+      - client-watch
 
 networks:
   backend:
   db:
+  client-watch:
 
 volumes:
   db-data:
