@@ -1,9 +1,9 @@
 version: "3.3"
 services:
-  db:
+  test-db:
     image: postgres:9.6
     networks:
-      - db
+      - test-db
     environment:
       POSTGRES_USER: swapr
       POSTGRES_PASSWORD: changeme_devpasswd
@@ -19,10 +19,9 @@ services:
       - ./gatech-swapr-server-node:/data/app
     working_dir: /data/app
     depends_on:
-      - db
+      - test-db
     networks:
-      - backend
-      - db
+      - test-db
     environment:
       PORT: 8001
       NODE_ENV: development
@@ -33,8 +32,4 @@ services:
       - ./config/backend/config.dev.json:/data/app/config/config.json:ro
 
 networks:
-  backend:
-  db:
-
-volumes:
-  db-data:
+  test-db:

@@ -24,7 +24,9 @@ services:
       YARN_CACHE_FOLDER: /yarn_cache
 
   client-watch:
-    build: ./gatech-swapr-client
+    build:
+      context: ./gatech-swapr-client
+      dockerfile: Dockerfile.watch
     user: "node"
     volumes:
       - ./gatech-swapr-client:/data/src
