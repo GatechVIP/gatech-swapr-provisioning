@@ -1,11 +1,15 @@
 version: "3.3"
 services:
   db:
-    image: postgres:9.6
+    image: postgres:latest
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
       - db
+    environment:
+      POSTGRES_USER: swapr
+      POSTGRES_PASSWORD: changeme_prodpasswd
+      POSTGRES_DB: swapr_prod
 
   backend:
     image: gatechswapr/backend:latest
@@ -21,20 +25,29 @@ services:
     networks:
       - backend
       - db
+    environment:
+      PORT: 8001
+      NODE_ENV: production
+      DB_USERNAME: swapr
+      DB_PASSWORD: changeme_prodpasswd
+      DB_NAME: swapr_prod
+
   www:
     image: nginx:latest
     depends_on:
       - backend
     networks:
       - backend
+    ports:
+      - 80:80
+      - 443:443
     configs:
       - source: nginx_config
         target: /etc/nginx/conf.d/vhost.conf
-    volumes:
-      - ./config/www/ssl:/etc/nginx/ssl:ro
-      - ./gatech-swapr-client/dist:/usr/share/nginx/html:ro
-    links:
-      - backend
+      - source: nginx_ssl_cert
+        target: /etc/nginx/ssl/ssl.prod.cert
+      - source: nginx_ssl_key
+        target: /etc/nginx/ssl/ssl.prod.key
 
 networks:
   backend:
@@ -45,6 +58,10 @@ volumes:
 
 configs:
   nginx_config:
-    file: ./config/www/nginx.conf
+    file: ./config/www/nginx.prod.conf
+  nginx_ssl_cert:
+    file: ./config/www/ssl/ssl.dev.cert
+  nginx_ssl_key:
+    file: ./config/www/ssl/ssl.dev.key
   backend_config:
     file: ./config/backend/config.prod.json
