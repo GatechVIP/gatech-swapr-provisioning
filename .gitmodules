@@ -7,3 +7,6 @@
 [submodule "docs"]
 	path = docs
 	url = git@github.com:GatechVIP/gatech-swapr-provisioning.wiki.git
+[submodule "swapr-react-client"]
+	path = swapr-react-client
+	url = git@github.com:GatechVIP/swapr-react-client.git
