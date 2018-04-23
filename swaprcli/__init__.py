@@ -4,6 +4,7 @@ from cement.core.foundation import CementApp
 from cement.core.controller import CementBaseController, expose
 
 from .images import SwaprCLIImagesController
+from .production import SwaprCLIProductionController
 
 
 class SwaprCLIBaseController(CementBaseController):
@@ -20,7 +21,11 @@ class SwaprCLI(CementApp):
     class Meta:
         label = 'swaprcli'
         base_controller = 'base'
-        handlers = [SwaprCLIBaseController, SwaprCLIImagesController]
+        handlers = [
+            SwaprCLIBaseController,
+            SwaprCLIImagesController,
+            SwaprCLIProductionController
+        ]
 
 
 if __name__ == '__main__':

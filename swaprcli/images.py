@@ -12,6 +12,10 @@ class SwaprCLIImagesController(CementBaseController):
         stacked_type = 'nested'
         description = 'Utilities for building and pushing production-ready Docker images.'
 
+    @expose(hide=True)
+    def default(self):
+        self.app.args.print_help()
+
     @expose(help="Builds production Docker images for all services.")
     def build(self):
         self.app.log.info("Building {} images: {}".format(
