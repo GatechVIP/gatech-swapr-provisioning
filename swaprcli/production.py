@@ -25,7 +25,7 @@ class SwaprCLIProductionController(CementBaseController):
         environment = os.environ.copy()
         environment.update(PRODUCTION_DOCKER_ENV)
 
-        proc = Popen(
+        proc = subprocess.Popen(
             [
                 'docker', 'stack', 'deploy',
                 '-c', 'docker-compose.production.yaml',
