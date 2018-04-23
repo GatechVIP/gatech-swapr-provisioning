@@ -1,4 +1,4 @@
-from subprocess import call, Popen
+import subprocess
 import sys
 import os
 
@@ -43,3 +43,40 @@ class SwaprCLIProductionController(CementBaseController):
             self.app.log.error("Encountered error while deploying.")
         else:
             self.app.log.info("Production deployment succeeded.")
+
+    @expose(help="Runs database migrations on the backend.")
+    def migrate(self):
+        self.app.log.info("Running database migrations...")
+
+        environment = os.environ.copy()
+        environment.update(PRODUCTION_DOCKER_ENV)
+
+        service_name = '{}_backend'.format(PRODUCTION_STACK_NAME)
+
+        proc = subprocess.Popen(
+            [
+                'docker', 'service', 'ps',
+                '-f', "name={}.1".format(service_name),
+                service_name,
+                '-q', '--no-trunc',
+            ],
+            stdout=subprocess.PIPE,
+            env=environment
+        )
+
+        container_name = proc.stdout.readline().decode('utf-8').strip()
+
+        self.app.log.info("Found container: {}.1.{}".format(service_name, container_name))
+
+        proc = subprocess.Popen(
+            [
+                'docker', 'exec',
+                '{}.1.{}'.format(service_name, container_name),
+                'sequelize', 'db:migrate'
+            ],
+            stdout=sys.stdout,
+            stderr=sys.stderr,
+            env=environment
+        )
+
+        proc.communicate()
