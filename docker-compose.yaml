@@ -49,7 +49,6 @@ services:
     volumes:
       - ./config/www/nginx.dev.conf:/etc/nginx/conf.d/vhost.conf:ro
       - ./config/www/ssl:/etc/nginx/ssl:ro
-      - ./gatech-swapr-client/dist:/client_dist:ro
     links:
       - backend
       - client-watch

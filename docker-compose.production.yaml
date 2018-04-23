@@ -33,7 +33,7 @@ services:
       DB_NAME: swapr_prod
 
   www:
-    image: nginx:latest
+    image: gatechswapr/www:latest
     depends_on:
       - backend
     networks:

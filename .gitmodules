@@ -1,9 +1,6 @@
 [submodule "gatech-swapr-server-node"]
 	path = gatech-swapr-server-node
 	url = git@github.com:GatechVIP/gatech-swapr-server-node.git
-[submodule "gatech-swapr-client"]
-	path = gatech-swapr-client
-	url = git@github.com:GatechVIP/gatech-swapr-client.git
 [submodule "docs"]
 	path = docs
 	url = git@github.com:GatechVIP/gatech-swapr-provisioning.wiki.git
